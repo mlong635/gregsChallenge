@@ -1,0 +1,61 @@
+{
+  "data­sheet": {
+    "description": "Simple XYZ circuit test characterization, specifications from ABC for FG888",
+    "version": 0,
+    "category": "XYZ",
+    "electrical­params": [
+      {
+        "display": "Voltage Coefficient",
+        "conditions": [
+          {
+            "display": "Temp",
+            "unit": "°C",
+            "condition": "TEMPERATURE",
+            "typ": "27"
+          },
+          {
+            "display": "VDD",
+            "min": "2.7",
+            "max": "3.6",
+            "linstep": "0.3",
+            "unit": "V",
+            "condition": "VOLTAGE",
+            "pin": "VDDA"
+          }
+        ],
+        "typ": {
+          "target": "0",
+          "penalty": "100"
+        },
+        "pin": "VBGP",
+        "unit": "%V/V",
+        "method": "VOLTAGE_COEFF_VBGP"
+      },
+      {
+        "min": {
+          "target": "­60",
+          "penalty": "fail"
+        },
+        "display": "Temperature Coefficient @ ­40°C",
+        "conditions": [
+          {
+            "display": "Temp",
+            "unit": "°C",
+            "condition": "TEMPERATURE",
+            "typ": "­40"
+          }
+        ],
+        "pin": "VBGP",
+        "unit": "ppm/°C",
+        "max": {
+          "target": "490",
+          "penalty": "fail"
+        },
+        "method": "TEMPERATURE_COEFF_VBGP"
+      }
+    ],
+    "foundry": "ABC",
+    "node": "FG888",
+    "ip­name": "XYZ00"
+  }
+}
