@@ -2,10 +2,47 @@
 <html>
 <head>
   <title>Greg's Challenge</title>
+  <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-Hello World!
+  <div ng-app="mainApp" ng-controller="MainCtrl">
+
+    <h1>Data Sheet
+    
+    <button type="Submit" class="submitData" ng-click="submitData()">Submit Data Sheet</button>
+    <button class="retrieveData" name="Fetch" ng-click="getData()">Retrieve Saved Data Sheet</button>
+    </h1>
+    
+    <div class="dataSheetHeader">
+
+      <input name="ip-name" id="ip-name" type="text" size="33" placeholder="Enter ip-name (i.e., XYZ00)"/>
+      <input name="version" id="version" type="text" size="33" placeholder="Enter version number (i.e., 2.0)"/>
+      <input name="node" id="node" type="text" size="33" placeholder="Enter Node (i.e., FG888)"/>
+      <input name="foundry" id="foundry" type="text" size="33" placeholder="Enter Foundry (i.e., ABC)"/>
+      <input name="category" id="category" type="text" size="33" placeholder="Enter Category (i.e., XYZ)"/>
+
+      <hr>
+
+      <textarea rows="6" cols="180" placeholder="Enter Description, for example, 'Simple XYZ circuit test characterization, specifications from ABC for FG888'"></textarea>
+
+    </div>
+
+    <h2><font color="1E90FF">Electrical Parameters</font></h2>
+    <hr>
+
+    <br><br><br><br>
+     <paramSet data-ng-repeat="param in params">
+        <input type="text" ng-model="param.name" name="" placeholder="Enter mobile number">
+        <button class="remove" ng-show="$last" ng-click="removeParam()">-</button>
+     </paramSet>
+     <button class="addParams" ng-click="addNewParam()">Add Parameter</button>
+         
+     <div id="paramsDisplay">
+        {{ params }}
+     </div>
+  </div>
 </body>
 <script src="angular.min.js"></script>
-<script src="angular-route.min.js"></script>
+<script src="main.js"></script>
 </html>
