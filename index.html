@@ -8,11 +8,11 @@
 <body>
   <div ng-app="mainApp" ng-controller="MainCtrl">
 
-    <h1>Data Sheet
+    <h2>Data Sheet
     
     <button type="Submit" class="submitData" ng-click="submitData()">Submit Data Sheet</button>
     <button class="retrieveData" name="Fetch" ng-click="getData()">Retrieve Saved Data Sheet</button>
-    </h1>
+    </h2>
     
     <div class="dataSheetHeader">
 
@@ -28,15 +28,61 @@
 
     </div>
 
-    <h2><font color="1E90FF">Electrical Parameters</font></h2>
+    <h2><font color="1E90FF">Electrical Parameters</font>
+      <button class="addParams" ng-click="addNewParam()">Add Parameter</button>
+    </h2>
+    
     <hr>
 
-    <br><br><br><br>
+    <table>
+      <tr class="tableHeader">
+        <th>PARAMETER</th>
+        <th>PIN</th>
+        <th>MINIMUM (TARGET)</th>
+        <th>TYPICAL (TARGET)</th>
+        <th>MAXIMUM (TARGET)</th>
+        <th>UNITS</th>
+      </tr>
+      <tr>
+        <td class="formInput"><input placeholder="Enter Parameter" /></td>
+        <td class="formInput"><input placeholder="Enter Pin" /></td>
+        <td class="formInput"><input placeholder="Enter Minimum (target)" /></td>
+        <td class="formInput"><input placeholder="Enter Typical (target)" /></td>
+        <td class="formInput"><input placeholder="Enter Maximum (target)" /></td>
+        <td class="formInput"><input placeholder="Enter Units" /></td>
+      </tr>
+      <tr>
+        <td rowspan="2">Conditions</td>
+        <td rowspan="1" colspan="2">Conditions</td>
+        <td colspan="3">
+          <table>
+            <tr class="tableHeader">
+              <th>Name</th>
+              <th>Pin</th>
+              <th>Minumum</th>
+              <th>Typical</th>
+              <th>Maximum</th>
+              <th>Unit</th>
+            </tr>
+            <tr>
+              <th>Name Input</th>
+              <th>Pin Input</th>
+              <th>Minumum Input</th>
+              <th>Typical Input</th>
+              <th>Maximum Input</th>
+              <th>Unit Input</th>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <br><br>
      <paramSet data-ng-repeat="param in params">
-        <input type="text" ng-model="param.name" name="" placeholder="Enter mobile number">
-        <button class="remove" ng-show="$last" ng-click="removeParam()">-</button>
+        <input type="text" ng-model="param.name" name="" placeholder="Enter New Parameter">
+        <button ng-show="$last" ng-click="removeParam()">Remove Parameter</button>
      </paramSet>
-     <button class="addParams" ng-click="addNewParam()">Add Parameter</button>
+     
          
      <div id="paramsDisplay">
         {{ params }}

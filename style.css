@@ -3,11 +3,40 @@ paramSet{
     padding: 16px;
     border: 1px solid #D5D5D5;
 }
-.addParams, 
+/*.addParams, 
 .retriveData,
 .submitData{
     margin: 10px 0;
     padding-left:10em;
+}*/
+
+.formInput {
+    padding: 0px;
+    border: 0px;
+}
+
+.addParams{
+    color: #00c073;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+/*th {
+  background-color: #ffffff;
+}*/
+
+.tableHeader {
+    background-color: #dddddd;
 }
 
 #paramsDisplay {
