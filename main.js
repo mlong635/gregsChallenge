@@ -103,18 +103,20 @@ app.controller("MainCtrl", ['$scope', function($scope) {
     }
   ];
 
+  $scope.params = [];
+
   $scope.getData = function () {
-    // var stringified = JSON.stringify($scope.datasheet);
+    // var parsedDataSheet = JSON.parse($scope.savedDataSheet);
+    $scope.params = $scope.savedDataSheet.electricalParams;
     // var newParams = [];
     var newDataSheet = {};
 
     for(var key in $scope.savedDataSheet){
-      if(key!=='electricalParams'){
-        newDataSheet[key] = $scope.savedDataSheet[key];
-      }
+      newDataSheet[key] = $scope.savedDataSheet[key];
     }
+    $scope.dataSheet.length = 0;  // empties the array
     $scope.dataSheet.push(newDataSheet);
-    // $scope.dataSheet = newParams;
+    console.log("$scope.params", $scope.params);
   };
 
   $scope.submitData = function () {

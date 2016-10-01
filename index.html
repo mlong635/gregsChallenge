@@ -50,19 +50,19 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="data in dataSheet">
-                    <td><input type="text" class="form-control" ng-model="data.electricalParams.display" placeholder="Enter parameter name" required/></td>
-                    <td><input type="text" class="form-control" ng-model="data.electricalParams.pin" placeholder="Enter PIN"/></td>
-                    <td><input type="text" class="form-control" ng-model="data.electricalParams.min" placeholder="Enter Minimum (Target)"/></td>
-                    <td><input type="text" class="form-control" ng-model="data.electricalParams.typ" placeholder="Enter Typical (Target)"/></td>
-                    <td><input type="text" class="form-control" ng-model="data.electricalParams.max" placeholder="Enter Maximum (Target)"/></td>
-                    <td><input type="text" class="form-control" ng-model="data.electricalParams.unit" placeholder="Enter Unit"/></td>
+                  <tr ng-repeat="param in params">
+                    <td><input type="text" class="form-control" ng-model="param.display" placeholder="Enter parameter name" required/></td>
+                    <td><input type="text" class="form-control" ng-model="param.pin" placeholder="Enter PIN"/></td>
+                    <td><input type="text" class="form-control" ng-model="param.min" placeholder="Enter Minimum (Target)"/></td>
+                    <td><input type="text" class="form-control" ng-model="param.typ" placeholder="Enter Typical (Target)"/></td>
+                    <td><input type="text" class="form-control" ng-model="param.max" placeholder="Enter Maximum (Target)"/></td>
+                    <td><input type="text" class="form-control" ng-model="param.unit" placeholder="Enter Unit"/></td>
                   </tr>
                 </tbody>
               </table>
 
               <button class="addNewParamBtn" ng-click="addNewParam()">Add New Electrical Parameter</button>
-              
+
             </form>
           </div>
         </div>
