@@ -11,23 +11,35 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-body">
-            <form ng-submit="addNew()">
+            <form ng-submit="submitData(data)">
 
-              <table class="table table-striped table-bordered">
+              <table id="tableHeader" class="table table-striped table-bordered">
                 <thead>
                   <h2>Data Sheet
                   
-                    <button type="Submit" class="submitData" ng-click="submitData()">Submit Data Sheet</button>
+                    <button type="Submit" class="submitData" ng-click="submitData(data)">Submit Data Sheet</button>
                     <button class="retrieveData" name="Fetch" ng-click="getData()">Retrieve Saved Data Sheet</button>
                     
                   </h2>
-                  <tr ng-repeat="param in params">
-                    <td><input type="text" class="form-control" ng-model="param.ipname" required/></td>
-                    <td><input type="text" class="form-control" ng-model="param.version" /></td>
-                    <td><input type="text" class="form-control" ng-model="param.node" /></td>
-                    <td><input type="text" class="form-control" ng-model="param.foundry" /></td>
-                    <td><input type="text" class="form-control" ng-model="param.category" /></td>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="data in dataSheet">
+                    <td><input type="text" class="form-control" ng-model="data.ipname" placeholder="Enter ipname" required/></td>
+                    <td><input type="text" class="form-control" ng-model="data.version" placeholder="Enter version"/></td>
+                    <td><input type="text" class="form-control" ng-model="data.node" placeholder="Enter node"/></td>
+                    <td><input type="text" class="form-control" ng-model="data.foundry" placeholder="Enter foundry"/></td>
+                    <td><input type="text" class="form-control" ng-model="data.category" placeholder="Enter category"/></td>
                   </tr>
+
+                  <tr ng-repeat="data in dataSheet">
+                  <td colspan="5"><textarea rows="5" class="form-control" ng-model="data.description" placeholder="Enter description"></textarea></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table class="eParams">
+                <thead>
+                  <h2 class="eParamsHeader">Electrical Parameters</h2>
                   <tr>
                     <th>PARAMETER</th>
                     <th>PIN</th>
@@ -38,15 +50,19 @@
                   </tr>
                 </thead>
                 <tbody>
-
+                  <tr ng-repeat="data in dataSheet">
+                    <td><input type="text" class="form-control" ng-model="data.electricalParams.display" placeholder="Enter parameter name" required/></td>
+                    <td><input type="text" class="form-control" ng-model="data.electricalParams.pin" placeholder="Enter PIN"/></td>
+                    <td><input type="text" class="form-control" ng-model="data.electricalParams.min" placeholder="Enter Minimum (Target)"/></td>
+                    <td><input type="text" class="form-control" ng-model="data.electricalParams.typ" placeholder="Enter Typical (Target)"/></td>
+                    <td><input type="text" class="form-control" ng-model="data.electricalParams.max" placeholder="Enter Maximum (Target)"/></td>
+                    <td><input type="text" class="form-control" ng-model="data.electricalParams.unit" placeholder="Enter Unit"/></td>
+                  </tr>
                 </tbody>
               </table>
 
-              <div class="form-group">
-                
-                <input type="submit" class="btn btn-primary addnew pull-right" value="Add New">
-
-              </div>
+              <button class="addNewParamBtn" ng-click="addNewParam()">Add New Electrical Parameter</button>
+              
             </form>
           </div>
         </div>
