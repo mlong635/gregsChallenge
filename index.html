@@ -5,88 +5,53 @@
   <link rel="stylesheet" href="style.css">
 
 </head>
-<body>
-  <div ng-app="mainApp" ng-controller="MainCtrl">
+<body ng-app="mainApp" ng-controller="MainCtrl">     
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <form ng-submit="addNew()">
 
-    <h2>Data Sheet
-    
-    <button type="Submit" class="submitData" ng-click="submitData()">Submit Data Sheet</button>
-    <button class="retrieveData" name="Fetch" ng-click="getData()">Retrieve Saved Data Sheet</button>
-    </h2>
-    
-    <div class="dataSheetHeader">
+              <table class="table table-striped table-bordered">
+                <thead>
+                  <h2>Data Sheet
+                  
+                    <button type="Submit" class="submitData" ng-click="submitData()">Submit Data Sheet</button>
+                    <button class="retrieveData" name="Fetch" ng-click="getData()">Retrieve Saved Data Sheet</button>
+                    
+                  </h2>
+                  <tr ng-repeat="param in params">
+                    <td><input type="text" class="form-control" ng-model="param.ipname" required/></td>
+                    <td><input type="text" class="form-control" ng-model="param.version" /></td>
+                    <td><input type="text" class="form-control" ng-model="param.node" /></td>
+                    <td><input type="text" class="form-control" ng-model="param.foundry" /></td>
+                    <td><input type="text" class="form-control" ng-model="param.category" /></td>
+                  </tr>
+                  <tr>
+                    <th>PARAMETER</th>
+                    <th>PIN</th>
+                    <th>MINIMUM (TARGET)</th>
+                    <th>TYPICAL (TARGET)</th>
+                    <th>MAXIMUM (TARGET)</th>
+                    <th>UNITS</th>
+                  </tr>
+                </thead>
+                <tbody>
 
-      <input name="ip-name" id="ip-name" type="text" size="33" placeholder="Enter ip-name (i.e., XYZ00)"/>
-      <input name="version" id="version" type="text" size="33" placeholder="Enter version number (i.e., 2.0)"/>
-      <input name="node" id="node" type="text" size="33" placeholder="Enter Node (i.e., FG888)"/>
-      <input name="foundry" id="foundry" type="text" size="33" placeholder="Enter Foundry (i.e., ABC)"/>
-      <input name="category" id="category" type="text" size="33" placeholder="Enter Category (i.e., XYZ)"/>
+                </tbody>
+              </table>
 
-      <hr>
+              <div class="form-group">
+                
+                <input type="submit" class="btn btn-primary addnew pull-right" value="Add New">
 
-      <textarea rows="6" cols="180" placeholder="Enter Description, for example, 'Simple XYZ circuit test characterization, specifications from ABC for FG888'"></textarea>
-
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <h2><font color="1E90FF">Electrical Parameters</font>
-      <button class="addParams" ng-click="addNewParam()">Add Parameter</button>
-    </h2>
-    
-    <hr>
-
-    <table>
-      <tr class="tableHeader">
-        <th>PARAMETER</th>
-        <th>PIN</th>
-        <th>MINIMUM (TARGET)</th>
-        <th>TYPICAL (TARGET)</th>
-        <th>MAXIMUM (TARGET)</th>
-        <th>UNITS</th>
-      </tr>
-      <tr>
-        <td class="formInput"><input placeholder="Enter Parameter" /></td>
-        <td class="formInput"><input placeholder="Enter Pin" /></td>
-        <td class="formInput"><input placeholder="Enter Minimum (target)" /></td>
-        <td class="formInput"><input placeholder="Enter Typical (target)" /></td>
-        <td class="formInput"><input placeholder="Enter Maximum (target)" /></td>
-        <td class="formInput"><input placeholder="Enter Units" /></td>
-      </tr>
-      <tr>
-        <td rowspan="2">Conditions</td>
-        <td rowspan="1" colspan="2">Conditions</td>
-        <td colspan="3">
-          <table>
-            <tr class="tableHeader">
-              <th>Name</th>
-              <th>Pin</th>
-              <th>Minumum</th>
-              <th>Typical</th>
-              <th>Maximum</th>
-              <th>Unit</th>
-            </tr>
-            <tr>
-              <th>Name Input</th>
-              <th>Pin Input</th>
-              <th>Minumum Input</th>
-              <th>Typical Input</th>
-              <th>Maximum Input</th>
-              <th>Unit Input</th>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-
-    <br><br>
-     <paramSet data-ng-repeat="param in params">
-        <input type="text" ng-model="param.name" name="" placeholder="Enter New Parameter">
-        <button ng-show="$last" ng-click="removeParam()">Remove Parameter</button>
-     </paramSet>
-     
-         
-     <div id="paramsDisplay">
-        {{ params }}
-     </div>
   </div>
 </body>
 <script src="angular.min.js"></script>
