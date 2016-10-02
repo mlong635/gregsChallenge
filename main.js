@@ -164,11 +164,8 @@ app.controller("MainCtrl", ['$scope', function($scope) {
   }
     
   $scope.addParam = function(params, index){
-    // var copy = $scope.dataSheet.slice();
-    // $scope.dataSheet = copy;
+    // make a copy of newParam or else you will get a ng-repeat dupes error
     var copy = [newParam].slice();
-    console.log("addParam to index ", index);
-    console.log('$scope.dataSheet', $scope.dataSheet);
     // iterate thru each of the params
     for(var i=0; i<params.length; i++){
       // if one of them does not have a name, alert that each parameter needs a name and then return
@@ -178,7 +175,8 @@ app.controller("MainCtrl", ['$scope', function($scope) {
       }
     }
     // if none of the existing params have blank names '', then add a new Param
-    $scope.dataSheet[0].electricalParams.push(copy);  
+    $scope.dataSheet[0].electricalParams.push(copy[0]);  
+    console.log($scope.dataSheet[0].electricalParams);
   };
 
   $scope.addCondition = function(paramName, params){
