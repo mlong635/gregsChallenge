@@ -70,37 +70,31 @@
                     <td><input type="text" class="form-control" ng-model="param.max.target" placeholder="Enter Maximum (Target)"/></td>
                     <td><input type="text" class="form-control" ng-model="param.unit" placeholder="Enter Unit"/></td>
                   </tr>
+                  <thead>
+                    <tr>
+                      <th colspan="2">CONDITIONS<button ng-click="addCondition(param.display, params, $index)">Add Condition</button></th>
+                      <th>NAME</th>
+                      <th>PIN</th>
+                      <th>MINIMUM</th>
+                      <th>TYPICAL</th>
+                      <th>MAXIMUM</th>
+                      <th>UNIT</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="param in params">
+                      <td colspan="2"><button ng-click="deleteCondition(condition.display, $index)">Delete this Condition</button></td>
 
-                  <!-- <table ng-repeat="param in params"> -->
-                  <table>
-                  <!-- <table> -->
-                    <thead>
-                      <tr>
-                        <th colspan="2">CONDITIONS<button ng-click="addCondition(param.display, params, $index)">Add Condition</button></th>
-                        <th>NAME</th>
-                        <th>PIN</th>
-                        <th>MINIMUM</th>
-                        <th>TYPICAL</th>
-                        <th>MAXIMUM</th>
-                        <th>UNIT</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr ng-repeat="param in params">
-                        <td colspan="2"><button ng-click="deleteCondition(condition.display, $index)">Delete this Condition</button></td>
-
-                        <td><input type="text" class="form-control" ng-model="condition.display" placeholder="Enter Unit"/></td>
-                        <td><input type="text" class="form-control" ng-model="condition.pin" placeholder="Enter Pin"/></td>
-                        <td><input type="text" class="form-control" ng-model="condition.min" placeholder="Enter Min"/></td>
-                        <td><input type="text" class="form-control" ng-model="condition.typ" placeholder="Enter Unit"/></td>
-                        <td><input type="text" class="form-control" ng-model="condition.max" placeholder="Enter Max"/></td>
-                        <td><input type="text" class="form-control" ng-model="condition.unit" placeholder="Enter Unit"/></td>
-                      </tr>
-                    </tbody>
-                  </table>
+                      <td><input type="text" class="form-control" ng-model="condition.display" placeholder="Enter Unit"/></td>
+                      <td><input type="text" class="form-control" ng-model="condition.pin" placeholder="Enter Pin"/></td>
+                      <td><input type="text" class="form-control" ng-model="condition.min" placeholder="Enter Min"/></td>
+                      <td><input type="text" class="form-control" ng-model="condition.typ" placeholder="Enter Unit"/></td>
+                      <td><input type="text" class="form-control" ng-model="condition.max" placeholder="Enter Max"/></td>
+                      <td><input type="text" class="form-control" ng-model="condition.unit" placeholder="Enter Unit"/></td>
+                    </tr>
+                  </tbody>
                 </tbody>
               </table>
-
             </form>
             <br><hr><br>
             {{ submitted }}
