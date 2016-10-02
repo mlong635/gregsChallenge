@@ -11,19 +11,27 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-body">
-            <form ng-submit="submitData(data)">
+            <!-- <form ng-submit="submitData(data)"> -->
+            <form>
 
-              <table id="tableHeader" class="table table-striped table-bordered">
+              <table id="tableHeader" ng-repeat="data in dataSheet" class="table table-striped table-bordered">
                 <thead>
                   <h2>Data Sheet
                   
-                    <button type="Submit" class="submitData" ng-click="submitData(data)">Submit Data Sheet</button>
-                    <button class="retrieveData" name="Fetch" ng-click="getData()">Retrieve Saved Data Sheet</button>
-                    
+                    <button type="Submit" class="submitData" ng-click="submitData(dataSheet, params, conditions)">Submit Data Sheet</button>
+                    <button class="retrieveData" name="Fetch" ng-click="getData()">Retrieve Saved Data Sheet</button>                   
                   </h2>
+                  <tr>
+                    <td>IP NAME</td>
+                    <td>VERSION</td>
+                    <td>NODE</td>
+                    <td>FOUNDRY</td>
+                    <td>CATEGORY</td>
+                  </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="data in dataSheet">
+                  <!-- <tr ng-repeat="data in dataSheet"> -->
+                  <tr>
                     <td><input type="text" class="form-control" ng-model="data.ipname" placeholder="Enter ipname" required/></td>
                     <td><input type="text" class="form-control" ng-model="data.version" placeholder="Enter version"/></td>
                     <td><input type="text" class="form-control" ng-model="data.node" placeholder="Enter node"/></td>
@@ -31,18 +39,18 @@
                     <td><input type="text" class="form-control" ng-model="data.category" placeholder="Enter category"/></td>
                   </tr>
 
-                  <tr ng-repeat="data in dataSheet">
+                  <!-- <tr ng-repeat="data in dataSheet"> -->
+                  <tr>
                   <td colspan="5"><textarea rows="5" class="form-control" ng-model="data.description" placeholder="Enter description"></textarea></td>
                   </tr>
                 </tbody>
               </table>
 
-              <table class="eParams">
+              <table ng-repeat="param in params" class="eParams">
                 <thead>
                   <h2 class="eParamsHeader">Electrical Parameters</h2>
                   <tr>
-                    <th>PARAMETERS<button ng-click="addParam()">Add Parameter</button></th>
-                    <th>PARAMETER</th>
+                    <th colspan="2">PARAMETER<button ng-click="addParam(params)">Add Parameter</button></th>
                     <th>NAME</th>
                     <th>PIN</th>
                     <th>MINIMUM (TARGET)</th>
@@ -52,47 +60,48 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="param in params">
-                    <td></td>
-                    <td><button ng-click="deleteParam(param.display)">Delete this Parameter</button></td>
-                    <td><input type="text" class="form-control" ng-model="param.display" placeholder="Enter parameter name"/></td>
+                  <!-- <tr ng-repeat="param in params"> -->
+                  <tr>
+
+                    <td colspan="2"><button ng-click="deleteParam(param.display)">Delete this Parameter</button></td>
+                    <td><input type="text" class="form-control" ng-model="param.display" placeholder="Enter parameter name" required/></td>
                     <td><input type="text" class="form-control" ng-model="param.pin" placeholder="Enter PIN"/></td>
                     <td><input type="text" class="form-control" ng-model="param.min.target" placeholder="Enter Minimum (Target)"/></td>
                     <td><input type="text" class="form-control" ng-model="param.typ.target" placeholder="Enter Typical (Target)"/></td>
                     <td><input type="text" class="form-control" ng-model="param.max.target" placeholder="Enter Maximum (Target)"/></td>
                     <td><input type="text" class="form-control" ng-model="param.unit" placeholder="Enter Unit"/></td>
                   </tr>
-                </tbody>
-              </table>
 
-              <table>
-                <thead>
-                  <tr rowspan="3">
-                    <td>Conditions<button ng-click="addCondition()">Add Condition</button></td>
-                    <td>Condition</td>
-                    <td>Name</td>
-                    <td>Pin</td>
-                    <td>Minimum</td>
-                    <td>Typical</td>
-                    <td>Maximum</td>
-                    <td>Unit</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="condition in conditions">
-                    <td></td>
-                    <td><button ng-click="deleteCondition(condition.display)">Delete this Condition</button></td>
-                    <td><input type="text" class="form-control" ng-model="condition.display" placeholder="Enter Unit"/></td>
-                    <td><input type="text" class="form-control" ng-model="condition.pin" placeholder="Enter Pin"/></td>
-                    <td><input type="text" class="form-control" ng-model="condition.min" placeholder="Enter Min"/></td>
-                    <td><input type="text" class="form-control" ng-model="condition.typ" placeholder="Enter Unit"/></td>
-                    <td><input type="text" class="form-control" ng-model="condition.max" placeholder="Enter Max"/></td>
-                    <td><input type="text" class="form-control" ng-model="condition.unit" placeholder="Enter Unit"/></td>
-                  </tr>
+                  <table ng-repeat="param in params">
+                    <thead>
+                      <tr>
+                        <th colspan="2">CONDITIONS<button ng-click="addCondition(param.display, params)">Add Condition</button></th>
+                        <th>NAME</th>
+                        <th>PIN</th>
+                        <th>MINIMUM</th>
+                        <th>TYPICAL</th>
+                        <th>MAXIMUM</th>
+                        <th>UNIT</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="condition in conditions">
+                        <td colspan="2"><button ng-click="deleteCondition(condition.display)">Delete this Condition</button></td>
+                        <td><input type="text" class="form-control" ng-model="condition.display" placeholder="Enter Unit"/></td>
+                        <td><input type="text" class="form-control" ng-model="condition.pin" placeholder="Enter Pin"/></td>
+                        <td><input type="text" class="form-control" ng-model="condition.min" placeholder="Enter Min"/></td>
+                        <td><input type="text" class="form-control" ng-model="condition.typ" placeholder="Enter Unit"/></td>
+                        <td><input type="text" class="form-control" ng-model="condition.max" placeholder="Enter Max"/></td>
+                        <td><input type="text" class="form-control" ng-model="condition.unit" placeholder="Enter Unit"/></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </tbody>
               </table>
 
             </form>
+            <br><hr><br>
+            {{ submitted }}
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 var app = angular.module("mainApp", []);
 app.controller("MainCtrl", ['$scope', function($scope) {
 
+  // this is minified for space-saving purposes.  To see the unminified version, see sample.json in root directory
   $scope.savedDataSheet = {
     "description": "Simple XYZ circuit test characterization, specifications from ABC for FG888",
     "version": 0,
@@ -61,50 +62,49 @@ app.controller("MainCtrl", ['$scope', function($scope) {
     "ipname": "XYZ00"
   };
 
-  $scope.dataSheet = [
-    { 
-      ipname: "", 
-      version: "",
-      node: "",
-      foundry: "",
-      category: "",
-      description: "",
-      electricalParams: [
-        {
-          display: "",
-          conditions: [
-            {
-              display: "",
-              min: "",
-              max: "",
-              linstep: "",
-              unit: "",
-              condition: "",
-              pin: "",
-              typ: ""
-            }
-          ],
-          typ: {
-            target: "",
-            penalty: "100"
-          },
-          min: {
-            target: "",
-            penalty: "fail"
-          },
-          max: {
-            target: "",
-            penalty: "fail"
-          },
-          pin: "",
-          unit: "",
-          method: ""
-        }
-      ]
-    }
-  ];
+  $scope.dataSheet = [{ 
+    ipname: "", 
+    version: "",
+    node: "",
+    foundry: "",
+    category: "",
+    description: "",
+    electricalParams: [
+      {
+        display: "",
+        conditions: [
+          {
+            display: "",
+            min: "",
+            max: "",
+            linstep: "",
+            unit: "",
+            condition: "",
+            pin: "",
+            typ: ""
+          }
+        ],
+        typ: {
+          target: "",
+          penalty: "100"
+        },
+        min: {
+          target: "",
+          penalty: "fail"
+        },
+        max: {
+          target: "",
+          penalty: "fail"
+        },
+        pin: "",
+        unit: "",
+        method: ""
+      }
+    ]
+  }];
 
-  $scope.params = [{
+
+  var newParam = {
     display: "",
     conditions: [
       {
@@ -132,58 +132,68 @@ app.controller("MainCtrl", ['$scope', function($scope) {
     pin: "",
     unit: "",
     method: ""
-  }];
+  };
 
-  $scope.conditions = [
-    {
-      display: "",
-      min: "",
-      max: "",
-      linstep: "",
-      unit: "",
-      condition: "",
-      pin: ""
-    }
-  ];
+  var newCondition = {
+    display: "",
+    min: "",
+    max: "",
+    linstep: "",
+    unit: "",
+    condition: "",
+    pin: ""
+  };
+
+  // set default blank fields
+  $scope.params = $scope.dataSheet[0].electricalParams;
+  $scope.conditions = $scope.dataSheet[0].electricalParams[0].conditions;
 
   $scope.getData = function () {
-
-    $scope.params = $scope.savedDataSheet.electricalParams;
-    $scope.conditions = $scope.savedDataSheet.electricalParams.conditions;
-    
-    var newDataSheet = {};
-
-    for(var key in $scope.savedDataSheet){
-      newDataSheet[key] = $scope.savedDataSheet[key];
-    }
-    $scope.dataSheet.length = 0;  // empties the array
-    $scope.dataSheet.push(newDataSheet);
+    $scope.submitted = '';
+    $scope.dataSheet.length = 0; // empties the array
+    $scope.dataSheet.push($scope.savedDataSheet);
   };
 
-  $scope.submitData = function () {
-    console.log("submitData invoked, here are the args", arguments);
+  $scope.submitData = function (dataSheet, params, conditions) {
+    $scope.submitted = {}
+    for(var key in dataSheet){
+      $scope.submitted[key] = dataSheet[key];
+    }
+    $scope.submitted.electricalParams = params;
+    $scope.submitted.electricalParams.conditions = conditions;
   }
     
-  $scope.addParam = function(data){
-    $scope.params.push({ 
-      ipname: "", 
-      version: "",
-      node: "",
-      foundry: "",
-      category: ""
-    });
+  $scope.addParam = function(params){
+    
+    // iterate thru each of the params
+    for(var i=0; i<params.length; i++){
+      // if one of them does not have a name, alert that each parameter needs a name and then return
+      if(params[i].display===''){
+        alert("Please make sure that all existing parameters have names before adding another parameter.  Thank you!")
+        return;
+      }
+    }
+    // if none of the existing params have blank names '', then add a new Param
+    $scope.dataSheet[0].electricalParams.push(newParam);  
   };
 
-  $scope.addCondition = function(){
-    $scope.conditions.push({
-      display: "",
-      min: "",
-      max: "",
-      linstep: "",
-      unit: "",
-      condition: "",
-      pin: ""
-    });
+  $scope.addCondition = function(paramName, params){
+    console.log("paramName", paramName, "params", params);
+    console.log("adding a new condition to the following parameter: ", paramName);
+    var matchIndex = null;
+    // iterate thru each of the params
+    for(var i=0; i<params.length; i++){
+      // if one of them does not have a name, alert that each parameter needs a name and then return
+      if(params[i].display===''){
+        alert("Please make sure that all parameters have names before adding another condition.  Thank you!")
+        return;
+      }
+      if(params[i].display===paramName){  // this finds which param to add the new condition to
+        matchIndex = i;
+      }
+    }
+    //then add a new condition to the chosen paramName
+    $scope.dataSheet[0].electricalParams[matchIndex].conditions.push(newCondition);
   };
 
   $scope.deleteCondition = function(conditionName){
@@ -214,3 +224,5 @@ app.controller("MainCtrl", ['$scope', function($scope) {
     }
   }
 }]);
+
+//
