@@ -86,15 +86,15 @@ app.controller("MainCtrl", ['$scope', function($scope) {
           ],
           typ: {
             target: "",
-            penalty: ""
+            penalty: "100"
           },
           min: {
             target: "",
-            penalty: ""
+            penalty: "fail"
           },
           max: {
             target: "",
-            penalty: ""
+            penalty: "fail"
           },
           pin: "",
           unit: "",
@@ -165,7 +165,7 @@ app.controller("MainCtrl", ['$scope', function($scope) {
   }
     
   $scope.addParam = function(data){
-    $scope.dataSheet.push({ 
+    $scope.params.push({ 
       ipname: "", 
       version: "",
       node: "",
@@ -184,6 +184,33 @@ app.controller("MainCtrl", ['$scope', function($scope) {
       condition: "",
       pin: ""
     });
+  };
+
+  $scope.deleteCondition = function(conditionName){
+    var index = null;
+    for(var i=0; i<$scope.conditions.length; i++){
+      if($scope.conditions[i].display===conditionName){
+        index = i;
+        $scope.conditions.splice(i, 1);
+        break;
+      }
+    }
+    if($scope.conditions.length===0){
+      $scope.addCondition();
+    }
   }
     
+  $scope.deleteParam = function (paramName){
+    var index = null;
+    for(var i=0; i<$scope.params.length; i++){
+      if($scope.params[i].display===paramName){
+        index = i;
+        $scope.params.splice(i, 1);
+        break;
+      }
+    }
+    if($scope.params.length===0){
+      $scope.addParam();
+    }
+  }
 }]);

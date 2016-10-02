@@ -41,7 +41,9 @@
                 <thead>
                   <h2 class="eParamsHeader">Electrical Parameters</h2>
                   <tr>
+                    <th>PARAMETERS<button ng-click="addParam()">Add Parameter</button></th>
                     <th>PARAMETER</th>
+                    <th>NAME</th>
                     <th>PIN</th>
                     <th>MINIMUM (TARGET)</th>
                     <th>TYPICAL (TARGET)</th>
@@ -51,11 +53,13 @@
                 </thead>
                 <tbody>
                   <tr ng-repeat="param in params">
-                    <td><input type="text" class="form-control" ng-model="param.display" placeholder="Enter parameter name" required/></td>
+                    <td></td>
+                    <td><button ng-click="deleteParam(param.display)">Delete this Parameter</button></td>
+                    <td><input type="text" class="form-control" ng-model="param.display" placeholder="Enter parameter name"/></td>
                     <td><input type="text" class="form-control" ng-model="param.pin" placeholder="Enter PIN"/></td>
-                    <td><input type="text" class="form-control" ng-model="param.min" placeholder="Enter Minimum (Target)"/></td>
-                    <td><input type="text" class="form-control" ng-model="param.typ" placeholder="Enter Typical (Target)"/></td>
-                    <td><input type="text" class="form-control" ng-model="param.max" placeholder="Enter Maximum (Target)"/></td>
+                    <td><input type="text" class="form-control" ng-model="param.min.target" placeholder="Enter Minimum (Target)"/></td>
+                    <td><input type="text" class="form-control" ng-model="param.typ.target" placeholder="Enter Typical (Target)"/></td>
+                    <td><input type="text" class="form-control" ng-model="param.max.target" placeholder="Enter Maximum (Target)"/></td>
                     <td><input type="text" class="form-control" ng-model="param.unit" placeholder="Enter Unit"/></td>
                   </tr>
                 </tbody>
@@ -73,10 +77,11 @@
                     <td>Maximum</td>
                     <td>Unit</td>
                   </tr>
-
+                </thead>
+                <tbody>
                   <tr ng-repeat="condition in conditions">
                     <td></td>
-                    <td><button>Delete this Condition</button></td>
+                    <td><button ng-click="deleteCondition(condition.display)">Delete this Condition</button></td>
                     <td><input type="text" class="form-control" ng-model="condition.display" placeholder="Enter Unit"/></td>
                     <td><input type="text" class="form-control" ng-model="condition.pin" placeholder="Enter Pin"/></td>
                     <td><input type="text" class="form-control" ng-model="condition.min" placeholder="Enter Min"/></td>
@@ -84,11 +89,8 @@
                     <td><input type="text" class="form-control" ng-model="condition.max" placeholder="Enter Max"/></td>
                     <td><input type="text" class="form-control" ng-model="condition.unit" placeholder="Enter Unit"/></td>
                   </tr>
-                </thead>
-                  
+                </tbody>
               </table>
-
-              <button class="addNewParamBtn" ng-click="addNewParam()">Add New Electrical Parameter</button>
 
             </form>
           </div>
