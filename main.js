@@ -163,8 +163,12 @@ app.controller("MainCtrl", ['$scope', function($scope) {
     $scope.submitted.electricalParams.conditions = conditions;
   }
     
-  $scope.addParam = function(params){
-    
+  $scope.addParam = function(params, index){
+    // var copy = $scope.dataSheet.slice();
+    // $scope.dataSheet = copy;
+    var copy = [newParam].slice();
+    console.log("addParam to index ", index);
+    console.log('$scope.dataSheet', $scope.dataSheet);
     // iterate thru each of the params
     for(var i=0; i<params.length; i++){
       // if one of them does not have a name, alert that each parameter needs a name and then return
@@ -174,7 +178,7 @@ app.controller("MainCtrl", ['$scope', function($scope) {
       }
     }
     // if none of the existing params have blank names '', then add a new Param
-    $scope.dataSheet[0].electricalParams.push(newParam);  
+    $scope.dataSheet[0].electricalParams.push(copy);  
   };
 
   $scope.addCondition = function(paramName, params){
