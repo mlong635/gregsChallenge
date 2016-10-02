@@ -61,6 +61,33 @@
                 </tbody>
               </table>
 
+              <table>
+                <thead>
+                  <tr rowspan="3">
+                    <td>Conditions<button ng-click="addCondition()">Add Condition</button></td>
+                    <td>Condition</td>
+                    <td>Name</td>
+                    <td>Pin</td>
+                    <td>Minimum</td>
+                    <td>Typical</td>
+                    <td>Maximum</td>
+                    <td>Unit</td>
+                  </tr>
+
+                  <tr ng-repeat="condition in conditions">
+                    <td></td>
+                    <td><button>Delete this Condition</button></td>
+                    <td><input type="text" class="form-control" ng-model="condition.display" placeholder="Enter Unit"/></td>
+                    <td><input type="text" class="form-control" ng-model="condition.pin" placeholder="Enter Pin"/></td>
+                    <td><input type="text" class="form-control" ng-model="condition.min" placeholder="Enter Min"/></td>
+                    <td><input type="text" class="form-control" ng-model="condition.typ" placeholder="Enter Unit"/></td>
+                    <td><input type="text" class="form-control" ng-model="condition.max" placeholder="Enter Max"/></td>
+                    <td><input type="text" class="form-control" ng-model="condition.unit" placeholder="Enter Unit"/></td>
+                  </tr>
+                </thead>
+                  
+              </table>
+
               <button class="addNewParamBtn" ng-click="addNewParam()">Add New Electrical Parameter</button>
 
             </form>

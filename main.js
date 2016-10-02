@@ -80,7 +80,8 @@ app.controller("MainCtrl", ['$scope', function($scope) {
               linstep: "",
               unit: "",
               condition: "",
-              pin: ""
+              pin: "",
+              typ: ""
             }
           ],
           typ: {
@@ -103,12 +104,53 @@ app.controller("MainCtrl", ['$scope', function($scope) {
     }
   ];
 
-  $scope.params = [];
+  $scope.params = [{
+    display: "",
+    conditions: [
+      {
+        display: "",
+        min: "",
+        max: "",
+        linstep: "",
+        unit: "",
+        condition: "",
+        pin: ""
+      }
+    ],
+    typ: {
+      target: "",
+      penalty: ""
+    },
+    min: {
+      target: "",
+      penalty: ""
+    },
+    max: {
+      target: "",
+      penalty: ""
+    },
+    pin: "",
+    unit: "",
+    method: ""
+  }];
+
+  $scope.conditions = [
+    {
+      display: "",
+      min: "",
+      max: "",
+      linstep: "",
+      unit: "",
+      condition: "",
+      pin: ""
+    }
+  ];
 
   $scope.getData = function () {
-    // var parsedDataSheet = JSON.parse($scope.savedDataSheet);
+
     $scope.params = $scope.savedDataSheet.electricalParams;
-    // var newParams = [];
+    $scope.conditions = $scope.savedDataSheet.electricalParams.conditions;
+    
     var newDataSheet = {};
 
     for(var key in $scope.savedDataSheet){
@@ -116,14 +158,13 @@ app.controller("MainCtrl", ['$scope', function($scope) {
     }
     $scope.dataSheet.length = 0;  // empties the array
     $scope.dataSheet.push(newDataSheet);
-    console.log("$scope.params", $scope.params);
   };
 
   $scope.submitData = function () {
     console.log("submitData invoked, here are the args", arguments);
   }
     
-  $scope.addNewParam = function(data){
+  $scope.addParam = function(data){
     $scope.dataSheet.push({ 
       ipname: "", 
       version: "",
@@ -132,5 +173,17 @@ app.controller("MainCtrl", ['$scope', function($scope) {
       category: ""
     });
   };
+
+  $scope.addCondition = function(){
+    $scope.conditions.push({
+      display: "",
+      min: "",
+      max: "",
+      linstep: "",
+      unit: "",
+      condition: "",
+      pin: ""
+    });
+  }
     
 }]);
