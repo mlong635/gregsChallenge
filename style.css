@@ -20,3 +20,14 @@ h2.eParamsHeader {
     color: #1E90FF;
 }
 
+tr.eParamsHeaderRow {
+    background-color: #C0C0C0;
+}
+
+tr.conditionsHeader {
+    background-color: #0c9915;
+}
+
+table {
+    width: 100%;
+}
