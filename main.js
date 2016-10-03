@@ -120,15 +120,15 @@ app.controller("MainCtrl", ['$scope', function($scope) {
       ],
       typ: {
         target: "",
-        penalty: ""
+        penalty: "100"
       },
       min: {
         target: "",
-        penalty: ""
+        penalty: "fail"
       },
       max: {
         target: "",
-        penalty: ""
+        penalty: "fail"
       },
       pin: "",
       unit: "",
@@ -158,16 +158,15 @@ app.controller("MainCtrl", ['$scope', function($scope) {
   $scope.getData = function () {
     $scope.submitted = '';
     $scope.dataSheet.length = 0; // empties the array
+    console.log("$scope.dataSheet", $scope.dataSheet, "$scope.savedDataSheet", $scope.savedDataSheet);
     $scope.dataSheet.push($scope.savedDataSheet);
+    console.log("just pushed $scope.dataSheet", $scope.dataSheet);  
+    $scope.params = $scope.dataSheet[0].electricalParams;
+    $scope.conditions = $scope.dataSheet[0].electricalParams[0].conditions;
   };
 
-  $scope.submitData = function (dataSheet, params, conditions) {
-    $scope.submitted = {}
-    for(var key in dataSheet){
-      $scope.submitted[key] = dataSheet[key];
-    }
-    $scope.submitted.electricalParams = params;
-    $scope.submitted.electricalParams.conditions = conditions;
+  $scope.submitData = function (dataSheet) {
+    $scope.submitted = $scope.dataSheet[0];
   }
     
   $scope.addParam = function(params, index){
@@ -204,33 +203,31 @@ app.controller("MainCtrl", ['$scope', function($scope) {
     $scope.dataSheet[0].electricalParams[matchIndex].conditions.push(newCondition);
   };
 
-  $scope.deleteCondition = function(conditionName){
-    var index = null;
-    for(var i=0; i<$scope.conditions.length; i++){
-      if($scope.conditions[i].display===conditionName){
-        index = i;
-        $scope.conditions.splice(i, 1);
-        break;
+  $scope.deleteCondition = function(paramName, index){
+    console.log("paramName", paramName, "index", index);
+    var params = $scope.dataSheet[0].electricalParams;
+    
+    for(var i=0; i<params.length; i++){
+      if(params[i].display===paramName){
+        if(index===0){
+          $scope.dataSheet[0].electricalParams[i].conditions[0] = new Condition;
+          return;
+        }
+        else {
+          $scope.dataSheet[0].electricalParams[i].conditions.splice(index, 1);
+        }
       }
-    }
-    if($scope.conditions.length===0){
-      $scope.addCondition();
     }
   }
     
-  $scope.deleteParam = function (paramName){
-    var index = null;
-    for(var i=0; i<$scope.params.length; i++){
-      if($scope.params[i].display===paramName){
-        index = i;
-        $scope.params.splice(i, 1);
-        break;
-      }
+  $scope.deleteParam = function (index){
+    if(index===0){
+      $scope.dataSheet[0].electricalParams[index] = new Param;
+      return;
     }
-    if($scope.params.length===0){
-      $scope.addParam();
+    else {
+      $scope.dataSheet[0].electricalParams.splice(index, 1);
     }
   }
 }]);
 
-//
