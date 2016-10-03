@@ -56,7 +56,6 @@
                 </thead>
                 <tbody>
                   <tr>
-
                     <td colspan="2"><button ng-click="deleteParam($index)">Delete this Parameter</button></td>
                     <td><input type="text" class="form-control" ng-model="param.display" placeholder="Enter parameter name" required/></td>
                     <td><input type="text" class="form-control" ng-model="param.pin" placeholder="Enter PIN"/></td>
@@ -91,6 +90,7 @@
                 </tbody>
               </table>
             </form>
+            <!-- Obviously we wouldn't leave this in a marketable product, but we are just showing the JSON object being captured -->
             <br><hr><br>
             {{ submitted }}
           </div>

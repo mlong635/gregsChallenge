@@ -2,66 +2,9 @@ var app = angular.module("mainApp", []);
 app.controller("MainCtrl", ['$scope', function($scope) {
 
   // this is minified for space-saving purposes.  To see the unminified version, see sample.json in root directory
-  $scope.savedDataSheet = {
-    "description": "Simple XYZ circuit test characterization, specifications from ABC for FG888",
-    "version": 0,
-    "category": "XYZ",
-    "electricalParams": [
-      {
-        "display": "Voltage Coefficient",
-        "conditions": [
-          {
-            "display": "Temp",
-            "unit": "ºC",
-            "condition": "TEMPERATURE",
-            "typ": "27"
-          },
-          {
-            "display": "VDD",
-            "min": "2.7",
-            "max": "3.6",
-            "linstep": "0.3",
-            "unit": "V",
-            "condition": "VOLTAGE",
-            "pin": "VDDA"
-          }
-        ],
-        "typ": {
-          "target": "0",
-          "penalty": "100"
-        },
-        "pin": "VBGP",
-        "unit": "%V/V",
-        "method": "VOLTAGE_COEFF_VBGP"
-      },
-      {
-        "min": {
-          "target": "60",
-          "penalty": "fail"
-        },
-        "display": "Temperature Coefficient @ 40ºC",
-        "conditions": [
-          {
-            "display": "Temp",
-            "unit": "ºC",
-            "condition": "TEMPERATURE",
-            "typ": "40"
-          }
-        ],
-        "pin": "VBGP",
-        "unit": "ppm/ºC",
-        "max": {
-          "target": "490",
-          "penalty": "fail"
-        },
-        "method": "TEMPERATURE_COEFF_VBGP"
-      }
-    ],
-    "foundry": "ABC",
-    "node": "FG888",
-    "ipname": "XYZ00"
-  };
+  $scope.savedDataSheet = {"description": "Simple XYZ circuit test characterization, specifications from ABC for FG888", "version": 0, "category": "XYZ", "electricalParams": [{"display": "Voltage Coefficient", "conditions": [{"display": "Temp", "unit": "ºC", "condition": "TEMPERATURE", "typ": "27"},{"display": "VDD", "min": "2.7", "max": "3.6", "linstep": "0.3", "unit": "V", "condition": "VOLTAGE", "pin": "VDDA"}], "typ":{"target": "0", "penalty": "100"}, "pin": "VBGP", "unit": "%V/V", "method": "VOLTAGE_COEFF_VBGP"},{"min":{"target": "60", "penalty": "fail"}, "display": "Temperature Coefficient @ 40ºC", "conditions": [{"display": "Temp", "unit": "ºC", "condition": "TEMPERATURE", "typ": "40"}], "pin": "VBGP", "unit": "ppm/ºC", "max":{"target": "490", "penalty": "fail"}, "method": "TEMPERATURE_COEFF_VBGP"}], "foundry": "ABC", "node": "FG888", "ipname": "XYZ00"};
 
+  // $scope.dataSheet is to be modified with user input - all fields (except penalties) are initially blank
   $scope.dataSheet = [{ 
     ipname: "", 
     version: "",
@@ -103,7 +46,7 @@ app.controller("MainCtrl", ['$scope', function($scope) {
     ]
   }];
 
-  // Param constructor
+  // Param constructor - used to add a new Parameter
   function Param () {
     var obj = {
       display: "",
@@ -137,7 +80,7 @@ app.controller("MainCtrl", ['$scope', function($scope) {
     return obj;
   }
 
-  // Condition constructor
+  // Condition constructor - used to add a new Condition
   function Condition () {
     var obj = {
       display: "",
@@ -155,20 +98,22 @@ app.controller("MainCtrl", ['$scope', function($scope) {
   $scope.params = $scope.dataSheet[0].electricalParams;
   $scope.conditions = $scope.dataSheet[0].electricalParams[0].conditions;
 
+  // getData() fetches the saved data in the $scope.savedDataSheet and renders it to the data sheet on the DOM
   $scope.getData = function () {
     $scope.submitted = '';
     $scope.dataSheet.length = 0; // empties the array
-    console.log("$scope.dataSheet", $scope.dataSheet, "$scope.savedDataSheet", $scope.savedDataSheet);
     $scope.dataSheet.push($scope.savedDataSheet);
-    console.log("just pushed $scope.dataSheet", $scope.dataSheet);  
     $scope.params = $scope.dataSheet[0].electricalParams;
     $scope.conditions = $scope.dataSheet[0].electricalParams[0].conditions;
   };
 
+  // submitData() submits all the fields in the form and renders it in an object below the last condition.
+  // Obviously we wouldn't leave this in a marketable product, but we are just showing the JSON object being captured
   $scope.submitData = function (dataSheet) {
     $scope.submitted = $scope.dataSheet[0];
   }
-    
+  
+  // addParam() adds a new parameter
   $scope.addParam = function(params, index){
     // make a new Param using the Param Contructor or else you will get a ng-repeat dupes error
     var newParam = new Param;
@@ -184,6 +129,7 @@ app.controller("MainCtrl", ['$scope', function($scope) {
     $scope.dataSheet[0].electricalParams.push(newParam);  
   };
 
+  // addCondition() adds a new condition
   $scope.addCondition = function(paramName, params, condition){
     // make a new Condition using the Condition Contructor or else you will get a ng-repeat dupes error
     var newCondition = new Condition;
@@ -203,30 +149,38 @@ app.controller("MainCtrl", ['$scope', function($scope) {
     $scope.dataSheet[0].electricalParams[matchIndex].conditions.push(newCondition);
   };
 
+  // deleteParam() deletes a parameter
+  $scope.deleteParam = function (index){
+    // if it is the last parameter being deleted
+    if(index===0){
+      // make the zero-index a new Parmeter with the Param Constructor and then return
+      $scope.dataSheet[0].electricalParams[0] = new Param;
+      return;
+    }
+    // otherwise remove that one parameter only
+    else {
+      $scope.dataSheet[0].electricalParams.splice(index, 1);
+    }
+  }
+
+  // deleteCondition() deletes a condition
   $scope.deleteCondition = function(paramName, index){
-    console.log("paramName", paramName, "index", index);
     var params = $scope.dataSheet[0].electricalParams;
-    
+    // iterate thru the parameters
     for(var i=0; i<params.length; i++){
+      // if the parameter name matches the name of the parameter that we are deleting the condition...
       if(params[i].display===paramName){
+        // if it is the last condition being deleted...
         if(index===0){
+          // make the zero-index a new Condition with the Condition Constructor and then return
           $scope.dataSheet[0].electricalParams[i].conditions[0] = new Condition;
           return;
         }
+        // otherwise remove that one condition only
         else {
           $scope.dataSheet[0].electricalParams[i].conditions.splice(index, 1);
         }
       }
-    }
-  }
-    
-  $scope.deleteParam = function (index){
-    if(index===0){
-      $scope.dataSheet[0].electricalParams[index] = new Param;
-      return;
-    }
-    else {
-      $scope.dataSheet[0].electricalParams.splice(index, 1);
     }
   }
 }]);
