@@ -103,45 +103,52 @@ app.controller("MainCtrl", ['$scope', function($scope) {
     ]
   }];
 
+  // Param constructor
+  function Param () {
+    var obj = {
+      display: "",
+      conditions: [
+        {
+          display: "",
+          min: "",
+          max: "",
+          linstep: "",
+          unit: "",
+          condition: "",
+          pin: ""
+        }
+      ],
+      typ: {
+        target: "",
+        penalty: ""
+      },
+      min: {
+        target: "",
+        penalty: ""
+      },
+      max: {
+        target: "",
+        penalty: ""
+      },
+      pin: "",
+      unit: "",
+      method: ""
+    };
+    return obj;
+  }
 
-  var newParam = {
-    display: "",
-    conditions: [
-      {
-        display: "",
-        min: "",
-        max: "",
-        linstep: "",
-        unit: "",
-        condition: "",
-        pin: ""
-      }
-    ],
-    typ: {
-      target: "",
-      penalty: ""
-    },
-    min: {
-      target: "",
-      penalty: ""
-    },
-    max: {
-      target: "",
-      penalty: ""
-    },
-    pin: "",
-    unit: "",
-    method: ""
-  };
-
-  var newCondition = {
-    display: "",
-    min: "",
-    max: "",
-    linstep: "",
-    unit: "",
-    condition: "",
-    pin: ""
+  // Condition constructor
+  function Condition () {
+    var obj = {
+      display: "",
+      min: "",
+      max: "",
+      linstep: "",
+      unit: "",
+      condition: "",
+      pin: ""
+    };
+    return obj;
   };
 
   // set default blank fields
@@ -164,8 +171,8 @@ app.controller("MainCtrl", ['$scope', function($scope) {
   }
     
   $scope.addParam = function(params, index){
-    // make a copy of newParam or else you will get a ng-repeat dupes error
-    var copy = [newParam].slice();
+    // make a new Param using the Param Contructor or else you will get a ng-repeat dupes error
+    var newParam = new Param;
     // iterate thru each of the params
     for(var i=0; i<params.length; i++){
       // if one of them does not have a name, alert that each parameter needs a name and then return
@@ -175,13 +182,12 @@ app.controller("MainCtrl", ['$scope', function($scope) {
       }
     }
     // if none of the existing params have blank names '', then add a new Param
-    $scope.dataSheet[0].electricalParams.push(copy[0]);  
-    console.log($scope.dataSheet[0].electricalParams);
+    $scope.dataSheet[0].electricalParams.push(newParam);  
   };
 
-  $scope.addCondition = function(paramName, params){
-    console.log("paramName", paramName, "params", params);
-    console.log("adding a new condition to the following parameter: ", paramName);
+  $scope.addCondition = function(paramName, params, condition){
+    // make a new Condition using the Condition Contructor or else you will get a ng-repeat dupes error
+    var newCondition = new Condition;
     var matchIndex = null;
     // iterate thru each of the params
     for(var i=0; i<params.length; i++){
@@ -194,7 +200,7 @@ app.controller("MainCtrl", ['$scope', function($scope) {
         matchIndex = i;
       }
     }
-    //then add a new condition to the chosen paramName
+    //then add the newCondition object to the chosen paramName's conditions array
     $scope.dataSheet[0].electricalParams[matchIndex].conditions.push(newCondition);
   };
 
